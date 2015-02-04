@@ -11,13 +11,41 @@
   <script src="leaflet/leaflet.js"></script>
 
   <style>
-    body {
-      padding: 0;
-      margin: 0;
-    }
-    html, body, #map {
-      height: 100%;
-    }
+  body {
+    padding: 0;
+    margin: 0;
+  }
+  html, body, #map {
+    height: 100%;
+  }
+  .onclick-menu {
+    position: relative;
+    display: inline-block;
+  }
+  .onclick-menu:before {
+    content: "click me!";
+  }
+  .onclick-menu:focus {
+    /* clicking on label should toggle the menu */
+    pointer-events: none;
+  }
+  .onclick-menu:focus .onclick-menu-content {
+    /*  opacity is 1 in opened state (see below) */
+    opacity: 1;
+    visibility: visible;
+
+    /* don't let pointer-events affect descendant elements */
+    pointer-events: auto;
+  }
+  .onclick-menu-content {
+    position: absolute;
+    z-index: 1;
+
+    /* use opacity to fake immediate toggle */
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0.5s;
+  }
   </style>
 </head>
 <body>
@@ -34,26 +62,32 @@
 
 
   function onLocationFound(e) {
-      var radius = e.accuracy / 2;
+    var radius = e.accuracy / 2;
 
-      L.marker(e.latlng).addTo(map)
-          .bindPopup("You are within " + radius + " meters from this point").openPopup();
+    L.marker(e.latlng).addTo(map)
+    .bindPopup("You are within " + radius + " meters from this point").openPopup();
 
-      L.circle(e.latlng, radius).addTo(map);
-      map.locate({watch: false});
+    L.circle(e.latlng, radius).addTo(map);
   }
 
   function onLocationError(e) {
-      alert(e.message);
+    alert(e.message);
   }
 
   map.on('locationfound', onLocationFound);
   map.on('locationerror', onLocationError);
 
   map.locate({
-      setView: true,
-      maxZoom: 16
+    setView: true,
+    maxZoom: 16
   });
   </script>
+  <div tabindex="0" class="onclick-menu">
+    <ul class="onclick-menu-content">
+      <li><button onclick="alert('click 1')">Look, mom</button></li>
+      <li><button onclick="alert('click 2')">no JavaScript!</button></li>
+      <li><button onclick="alert('click 3')">Pretty nice, right?</button></li>
+    </ul>
+  </div>
 </body>
 </html>
