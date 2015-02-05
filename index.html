@@ -3,33 +3,94 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Leaflet mobile example</title>
+  <title>Map of Lion</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
 
   <link rel="stylesheet" href="leaflet/leaflet.css" />
 
   <script src="leaflet/leaflet.js"></script>
-
+  <script>
+  // When ready...
+  window.addEventListener("load",function() {
+    // Set a timeout...
+    setTimeout(function(){
+      // Hide the address bar!
+      window.scrollTo(0, 1);
+    }, 0);
+  });
+  </script>
   <style>
   body {
     padding: 0;
     margin: 0;
+    overflow: hidden;
   }
   html, body, #map {
     height: 100%;
   }
-  .onclick-menu {
+  .menuLauncher {
     position: absolute;
     bottom: 0;
     width: 100%;
     height: 50px;
-    background-color: #AAAAAA;
+    background-color: #aaaaaa;
     display: inline-block;
     font-family: Impact, Charcoal, sans-serif;
     text-align: center;
+  }#button{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    height:40px;
+    width:40px;
+    background-color:#ffffff;
+    /*border: 2px solid #a1a1a1;*/
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px #111;
+    text-align:center;
+  }
+  #arrow{
+    position: relative;
+    top: 50%;
+    transform:
+    translateY(-50%);
+    font-size:20;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    font-weight:100;
+    font-size: 120%;
+  }
+  #profile{
+    position: absolute;
+    height: 100%;
+    top: 0px;
+    width:80%;
+    background-color:#252525;
+    right:-80%;
   }
   </style>
+  <script>
+  var state = 1;
+  function doFunction(){
+    if(state == 1){
+      state = 2;
+      document.getElementById("arrow").innerHTML= "&#8594";
+      //document.getElementById("button").style.right = "calc(10px + 80%)";
+      document.getElementById("profile").style.right = "0%";
+    } else {
+      state = 1;
+      document.getElementById("arrow").innerHTML= "&#8592";
+      //document.getElementById("button").style.right = "10px";
+      document.getElementById("profile").style.right = "-80%";
+    }
+  }
+  </script>
 </head>
 <body>
   <div id="map"></div>
@@ -48,7 +109,7 @@
     var radius = e.accuracy / 2;
 
     L.marker(e.latlng).addTo(map)
-    .bindPopup("You are within " + radius + " meters from this point").openPopup();
+    .bindPopup("You are within " + radius + " meters of this point").openPopup();
 
     L.circle(e.latlng, radius).addTo(map);
   }
@@ -65,14 +126,21 @@
     maxZoom: 16
   });
   </script>
-  <div tabindex="0" class="onclick-menu">
-    <div style="position: relative;
-    top: 50%;
-    transform: translateY(-50%);">
-    <b>^</b></br>
-    Get Started
+
+  <div class="menuLauncher">
+    <div style="position: relative; top: 50%; transform: translateY(-50%);">
+      <b>&#9650</b></br>
+      Get Started
+    </div>
   </div>
 
-</div>
+  <div class="menu">
+    asdf
+  </div>
+
+  <div id="profile"></div>
+  <div id="button" onclick="doFunction();">
+  <div id="arrow">&#8592</div></div>
+
 </body>
 </html>
