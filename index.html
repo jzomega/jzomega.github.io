@@ -12,6 +12,10 @@
 
   <script src="leaflet/leaflet.js"></script>
   <script>
+  document.addEventListener('touchmove', function(e) {
+  e.preventDefault();
+  }, false);
+  window.scrollTo(0, 1);
   // When ready...
   window.addEventListener("load",function() {
     // Set a timeout...
@@ -25,6 +29,7 @@
   body {
     padding: 0;
     margin: 0;
+    position: relative;
     overflow: hidden;
   }
   html, body, #map {
@@ -54,8 +59,7 @@
   #arrow{
     position: relative;
     top: 50%;
-    transform:
-    translateY(-50%);
+    transform: translateY(-50%);
     font-size:20;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -66,13 +70,34 @@
     font-weight:100;
     font-size: 120%;
   }
+  #profileOption{
+    width:100%;
+    padding: 10px;
+    font-size: 24px;
+    font-color: white;
+    text-align: left;
+
+    border-bottom: #777 1px solid;
+    border-top: black 1px solid;
+
+    font-family:arial;
+    font-weight: bold;
+    font-color: white;
+    -moz-box-shadow:    inset 0px 0px 10px #000000;
+    -webkit-box-shadow: inset 0px 0px 10px #000000;
+    box-shadow:         inset 0px 0px 10px #000000;
+  }
   #profile{
+    padding-top: 60px;
     position: absolute;
     height: 100%;
     top: 0px;
     width:80%;
-    background-color:#252525;
+    background-color:#555555  ;
     right:-80%;
+    -moz-box-shadow:    inset 10px 0px 30px -10px #000000;
+    -webkit-box-shadow: inset 10px 0px 30px -10px #000000;
+    box-shadow:         inset 10px 0px 30px -10px #000000;
   }
   </style>
   <script>
@@ -138,7 +163,14 @@
     asdf
   </div>
 
-  <div id="profile"></div>
+  <div id="profile">
+    <div id="profileOption">This</div>
+    <div id="profileOption">Looks</div>
+    <div id="profileOption">Real</div>
+    <div id="profileOption">Ugly</div>
+    <div id="profileOption">Though</div>
+    <div id="profileOption">Settings</div>
+  </div>
   <div id="button" onclick="doFunction();">
   <div id="arrow">&#8592</div></div>
 
