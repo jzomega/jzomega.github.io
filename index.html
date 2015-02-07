@@ -6,24 +6,9 @@
   <title>Map of Lion</title>
   <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-
   <link rel="stylesheet" href="leaflet/leaflet.css" />
-
   <script src="leaflet/leaflet.js"></script>
-  <script>
-  document.addEventListener('touchmove', function(e) {
-  e.preventDefault();
-  }, false);
-  window.scrollTo(0, 1);
-  // When ready...
-  window.addEventListener("load",function() {
-    // Set a timeout...
-    setTimeout(function(){
-      // Hide the address bar!
-      window.scrollTo(0, 1);
-    }, 0);
-  });
-  </script>
+
   <style>
   body {
     padding: 0;
@@ -33,6 +18,12 @@
   }
   html, body, #map {
     height: 100%;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
   .menuLauncher {
     position: absolute;
@@ -40,6 +31,8 @@
     width: 100%;
     height: 50px;
     background-color: #aaaaaa;
+    border-top: 1px solid white;
+    border-bottom: 1px solid black;
     display: inline-block;
     font-family: Impact, Charcoal, sans-serif;
     text-align: center;
@@ -59,41 +52,40 @@
     position: relative;
     top: 50%;
     transform: translateY(-50%);
+    left:14px;
     font-size:20;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
     font-weight:100;
     font-size: 120%;
+    width: 0;
+    height: 0;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-right: 12px solid black;
   }
   #profileOption{
-    width:100%;
+    width:calc(100%-10px);
     padding: 10px;
     font-size: 24px;
     font-color: white;
     text-align: left;
 
-    border-bottom: #777 1px solid;
-    border-top: black 1px solid;
+    border-top: #777 1px solid;
+    border-bottom: black 2px solid;
 
     font-family:arial;
     font-weight: bold;
     font-color: white;
-    -moz-box-shadow:    inset 0px 0px 10px #000000;
-    -webkit-box-shadow: inset 0px 0px 10px #000000;
-    box-shadow:         inset 0px 0px 10px #000000;
   }
   #profile{
+    overflow: auto;
     padding-top: 60px;
     position: absolute;
-    height: 100%;
+    height: calc(100% - 60px);
     top: 0px;
     width:80%;
-    background-color:#555555  ;
-    right:-80%;
+    right:0px;
+    background-color:#222222;
+    visibility: hidden;
     -moz-box-shadow:    inset 10px 0px 30px -10px #000000;
     -webkit-box-shadow: inset 10px 0px 30px -10px #000000;
     box-shadow:         inset 10px 0px 30px -10px #000000;
@@ -101,17 +93,25 @@
   </style>
   <script>
   var state = 1;
+  document.addEventListener('touchmove', function(e) {
+  e.preventDefault();
+  }, false);
+  window.scrollTo(0, 1);
   function doFunction(){
     if(state == 1){
       state = 2;
-      document.getElementById("arrow").innerHTML= "&#8594";
+      //document.getElementById("arrow").innerHTML= "&#8594";
+      document.getElementById("arrow").style.borderLeft= "12px solid black";
+      document.getElementById("arrow").style.borderRight= "none";
       //document.getElementById("button").style.right = "calc(10px + 80%)";
-      document.getElementById("profile").style.right = "0%";
+      document.getElementById("profile").style.visibility = "visible";
     } else {
       state = 1;
-      document.getElementById("arrow").innerHTML= "&#8592";
+      //document.getElementById("arrow").innerHTML= "&#8592";
+      document.getElementById("arrow").style.borderRight= "12px solid black";
+      document.getElementById("arrow").style.borderLeft= "none";
       //document.getElementById("button").style.right = "10px";
-      document.getElementById("profile").style.right = "-80%";
+      document.getElementById("profile").style.visibility = "hidden";
     }
   }
   </script>
@@ -158,12 +158,9 @@
     </div>
   </div>
 
-  <div class="menu">
-    asdf
-  </div>
-
   <div id="profile">
     <div id="profileOption">This</div>
+    <div id="profileOption">Currently</div>
     <div id="profileOption">Looks</div>
     <div id="profileOption">Real</div>
     <div id="profileOption">Ugly</div>
@@ -171,7 +168,7 @@
     <div id="profileOption">Settings</div>
   </div>
   <div id="button" onclick="doFunction();">
-  <div id="arrow">&#8592</div></div>
+  <div id="arrow"> <!--&#8592--></div></div>
 
 </body>
 </html>
